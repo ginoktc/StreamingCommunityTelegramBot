@@ -14,6 +14,7 @@ The following is just a simple telegram bot to make the usage of [Streaming Comm
 
 ```bash
 git clone https://github.com/ginoktc/StreamingCommunityTelegramBot.git
+cd StreamingCommunityTelegramBot
 ```
 
 2. Copy the config file from the [original repo](https://github.com/Lovi-0/StreamingCommunity):
