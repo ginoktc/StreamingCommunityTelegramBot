@@ -19,7 +19,7 @@ git clone https://github.com/ginoktc/StreamingCommunityTelegramBot.git
 2. Copy the config file from the [original repo](https://github.com/Lovi-0/StreamingCommunity):
 
 ```bash
-wget -o config.json https://raw.githubusercontent.com/Lovi-0/StreamingCommunity/main/config.json
+wget -O config.json https://raw.githubusercontent.com/Lovi-0/StreamingCommunity/main/config.json
 ```
 
 3. Edit the `.env` file to change the `BOT_TOKEN` value to your bot token.
