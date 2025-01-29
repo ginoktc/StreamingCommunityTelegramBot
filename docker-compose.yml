@@ -1,0 +1,9 @@
+services:
+  telegram-bot:
+    build: . # Build the Docker image using the Dockerfile in the current directory
+    container_name: telegram-bot
+    env_file:
+      - .env # Load environment variables from the .env file
+    volumes:
+      - ${ROOT_PATH}:/app/Video
+    restart: unless-stopped # Automatically restart the container unless it is explicitly stopped
