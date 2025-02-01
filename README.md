@@ -28,7 +28,7 @@ wget -O config.json https://raw.githubusercontent.com/Lovi-0/StreamingCommunity/
 4. To run the bot simply run the following command:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Configuration
