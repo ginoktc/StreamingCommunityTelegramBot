@@ -22,6 +22,7 @@ from telegram.ext import (
     MessageHandler,
     ContextTypes,
     filters,
+    CallbackContext,
 )
 
 
@@ -41,6 +42,21 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN is not set in .env file.")
+
+ALLOWED_USERS = [int(user_id) for user_id in os.getenv("ALLOWED_USERS").split(",")]
+
+
+def restricted(func):
+    def wrapper(update: Update, context: CallbackContext, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in ALLOWED_USERS:
+            update.message.reply_text(
+                "🚫 Access denied: You are not authorized to use this bot."
+            )
+            return
+        return func(update, context, *args, **kwargs)
+
+    return wrapper
 
 
 def get_year(date: str) -> str:
@@ -95,6 +111,7 @@ def download_series_season(media_item: MediaItem, season_number: int):
 
 
 # Bot Handlers
+@restricted
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle the /start command."""
     await update.message.reply_text(
@@ -102,6 +119,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+@restricted
 async def handle_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle the user input for search."""
     user_input = update.message.text
@@ -139,6 +157,7 @@ async def handle_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+@restricted
 async def handle_selection(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle the user selection from the search results."""
     query = update.callback_query
@@ -185,6 +204,7 @@ async def handle_selection(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
+@restricted
 async def handle_season_selection(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle season selection and simulate a loading bar."""
     query = update.callback_query
